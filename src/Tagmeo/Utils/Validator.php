@@ -96,9 +96,3 @@ class Validator
         return [];
     }
 }
-
-$base_url = Validator::getPattern('protocol').Validator::getPattern('domain').Validator::getPattern('url_slug');
-$url = $base_url.Validator::getPattern('query_string');
-
-Validator::addPattern('base_url', $base_url);
-Validator::addPattern('url', $url);
