@@ -2,6 +2,8 @@
 
 namespace Tagmeo\Foundation;
 
+use Tagmeo\Utils\Validator;
+
 class Boot
 {
     protected function loadClasses()
@@ -24,11 +26,7 @@ class Boot
 
     protected function addFilters()
     {
-        add_filter('contextual_help_list', function () {
-            global $current_screen;
-
-            $current_screen->remove_help_tab('options-press');
-        });
+        // Add your WordPress filters here
     }
 
     protected function addThemeSupport()
@@ -39,5 +37,14 @@ class Boot
             add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio']);
             add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
         });
+    }
+
+    protected function addValidatorPatterns()
+    {
+        $baseUrl = Validator::getPattern('protocol').Validator::getPattern('domain').Validator::getPattern('url_slug');
+        $url = $baseUrl.Validator::getPattern('query_string');
+
+        Validator::addPattern('base_url', $baseUrl);
+        Validator::addPattern('url', $url);
     }
 }
